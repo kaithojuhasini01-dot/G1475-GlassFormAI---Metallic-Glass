@@ -1,0 +1,135 @@
+DATA CLEANING LOG
+=================
+
+Dataset:
+Hugging Face Metallic Glass Dataset
+
+Number of records:
+998
+
+Purpose:
+To document all changes or special handling performed during
+dataset cleaning without modifying the original raw dataset.
+
+
+------------------------------------------------------------
+CASE 1: ROW 372 – LIQUIDUS TEMPERATURE CORRECTION
+------------------------------------------------------------
+
+Row index:
+372
+
+Composition:
+Al35La50Ni15
+
+Reference/DOI in dataset:
+10.1016/j.scriptamat.2008.08.003
+
+Original raw dataset values:
+Tg = 532 K
+Tx = 596 K
+Tl = 97 K
+Dmax = 5.0 mm
+
+Problem identified:
+The reported Tl value of 97 K is inconsistent with the
+temperature data for this alloy and required source verification.
+
+Source used for verification:
+B. A. Sun et al.,
+"Aluminum-rich bulk metallic glasses"
+Scripta Materialia, Volume 59, Issue 10, 2008,
+Pages 1159–1162.
+
+DOI:
+10.1016/j.scriptamat.2008.08.003
+
+Evidence:
+Table 1 of the paper lists the alloy Al35La50Ni15 with:
+
+Tg = 532 K
+Tx = 596 K
+Tm = 784 K
+Tl = 971 K
+DTm = 187 K
+DTx = 64 K
+
+The paper also states that Al35La50Ni15 can be cast into
+glassy rods of at least 5 mm diameter, consistent with the
+dataset Dmax value of 5.0 mm.
+
+Action taken:
+Tl was corrected from 97 K to 971 K in the cleaned dataset.
+
+Original raw dataset:
+Preserved unchanged in data/raw/.
+
+Cleaned dataset:
+Corrected value stored in data/cleaned/.
+
+Reason:
+The correction is directly supported by Table 1 of the
+cited scientific paper.
+
+------------------------------------------------------------
+CASE 2: ROW 782 – Tx VALUE FLAGGED
+------------------------------------------------------------
+
+Row index:
+782
+
+Composition:
+Cu20Mg65Tb10Zn5
+
+Reference/DOI:
+10.1016/j.jnoncrysol.2008.09.032
+
+Reported values:
+Tg = 428 K
+Tx = 75 K
+Tl = 726 K
+Dmax = 7.0 mm
+
+Problem identified:
+The reported Tx = 75 K was identified as suspicious because 
+it does not satisfy the expected relationship Tg < Tx < Tl.
+
+Source verification:
+
+The cited paper was manually checked using the DOI
+10.1016/j.jnoncrysol.2008.09.032.
+
+The paper confirms the same composition:
+Mg65Cu20Zn5Tb10
+
+This corresponds to the dataset composition:
+Cu20Mg65Tb10Zn5
+
+The paper also reports amorphous rods with a diameter
+of at least 7 mm, consistent with the dataset Dmax = 7.0 mm.
+
+However, the accessible article preview did not provide
+the thermal values required to verify Tg, Tx, and Tl.
+
+Action taken:
+The value was NOT manually changed because a reliable
+source confirming the correct Tx value was not established.
+
+The record was retained and the Tx value was flagged as
+"Unverified - Tx value reported as 75 K".
+
+The original raw value remains preserved.
+
+------------------------------------------------------------
+GENERAL CLEANING NOTES
+------------------------------------------------------------
+
+Missing values were identified.
+Duplicate records were checked.
+Chemical formula format was checked.
+Temperature units were verified as Kelvin.
+Dmax was checked for missing and negative values.
+The original raw dataset was not overwritten.
+
+All manual corrections and flagged records are documented
+before model development.

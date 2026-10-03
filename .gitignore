@@ -1,0 +1,14 @@
+# Ignore raw dataset (too large)
+data/raw/*.parquet
+data/raw/*.csv
+
+# Ignore large feature files (if they are big)
+# data/features/*.csv
+
+# Ignore temporary files
+__pycache__/
+*.pyc
+.vscode/
+
+# Ignore videos
+*.mp4
