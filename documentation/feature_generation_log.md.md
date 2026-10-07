@@ -18,7 +18,7 @@
 
 \- Original columns: 8
 
-\- Generated columns: 140 (Composition + targets + 132 Matminer descriptors)
+\- Generated columns: 140 (8 Original + 132 Matminer descriptors)
 
 \- Features generated include: Mean Electronegativity, Mean Melting Temperature, Average Deviation of Valence Electrons, etc.
 
