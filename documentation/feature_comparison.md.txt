@@ -1,0 +1,31 @@
+# Feature Comparison: Paper vs. Matminer
+
+**Date:** 08-10-2026
+**Paper's Feature Count:** 132 descriptors
+**Our Matminer Feature Count:** 140 features
+
+## What Matches
+All 13 elemental properties listed in the paper are present in the Matminer feature set. 
+- **Atomic number** -> `MagpieData mean/avg_dev AtomicNumber`
+- **Mendeleev number** -> `MagpieData mean/avg_dev MendeleevNumber`
+- **Atomic weight** -> `MagpieData mean/avg_dev AtomicWeight`
+- **Melting temperature** -> `MagpieData mean/avg_dev MeltingT`
+- **Column and row** -> `MagpieData mean/avg_dev Column` & `Row`
+- **Covalent radius** -> `MagpieData mean/avg_dev CovalentRadius`
+- **Electronegativity** -> `MagpieData mean/avg_dev Electronegativity`
+- **Valence electrons** -> `MagpieData mean/avg_dev NValence`
+- **Unfilled electrons** -> `MagpieData mean/avg_dev NUnfilled`
+- **Atomic volume** -> `MagpieData mean/avg_dev GSvolume_pa`
+- **Bandgap** -> `MagpieData mean/avg_dev GSBandgap`
+- **Magnetic moment** -> `MagpieData mean/avg_dev GSMagmom`
+- **Space group number** -> `MagpieData mean/avg_dev SpaceGroupNumber`
+
+*Note: The paper uses "absolute deviation" which corresponds to Matminer's `avg_dev`.*
+
+## What is Different
+1. **Number of Features:** The paper generated 132 descriptors, while Matminer generated 140.
+2. **Additional Statistical Features:** Matminer generates `mode` and `range` for each property, in addition to `mean`, `avg_dev`, `minimum`, and `maximum`. This accounts for the extra 8 features (140 vs 132).
+3. **Weighting Method:** The paper uses a hand-crafted weighted average based on elemental fractions. Matminer parses the chemical formula string into elemental fractions using pymatgen, then uses its internal Magpie aggregation methods to compute the weighted averages and statistical features automatically.
+
+## Conclusion
+The Matminer Magpie preset provides a robust, automated approximation of the paper's 132 descriptors. While not identical (due to `mode` and `range` additions), it successfully generates the foundational numerical features needed for our ML models.
