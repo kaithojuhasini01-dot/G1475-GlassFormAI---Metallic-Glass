@@ -1,0 +1,16 @@
+# Saving the Feature Dataset Log
+
+**Date:** 09-10-2026
+
+## Checks Performed:
+- **Rows and Columns:** 998 rows, 140 columns.
+- **Missing Values:** 0.
+- **Infinite Values:** 0.
+- **Numerical Verification:** All features are numerical. Only the 'Composition' and 'Reference' columns contain text.
+- **Formula Preserved:** The 'Composition' column was kept as the ID column.
+
+## Files Saved:
+1. `final_feature_dataset.csv` - Complete dataset (Formula + Features + Targets).
+2. `X_features.csv` - Input features for ML models (Formula + 132 Matminer features).
+3. `y_targets.csv` - Target variables (Tg, Tx, Tl, Dmax).
+
