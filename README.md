@@ -24,6 +24,7 @@ This project aims to reproduce and extend the machine learning pipeline from the
 - [x] Day 3: Fixed the NaN Error in numerical feature generation.
 - [x] Day 5: Documented feature comparison between paper and matminer.
 - [x] Day 6: Saved final feature dataset and separated targets.
+- [x] Day 7: Prepared target datasets.
 
 ## 🛠️ Technologies Used
 - Python (Pandas, NumPy, Matminer, Pymatgen)
