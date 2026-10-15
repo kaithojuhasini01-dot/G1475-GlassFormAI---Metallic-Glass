@@ -1,0 +1,17 @@
+# Preparing Target Datasets Log
+
+**Date:** 15-10-2026
+
+## What was done:
+1. **Classification Dataset Created:**
+   - Created `Dmax_label` column based on the paper's definition (`Dmax > 0` = 1, `Dmax = 0` = 0).
+   - Saved as `data/features/classification_data.csv`.
+   - **Important Observation:** The `Dmax_label` target counts show `1` for all 998 records. This means every alloy in this specific dataset          has a Dmax > 0. Consequently, the classification model will not have any negative class (Dmax = 0) examples to learn from. We will need to address this in the model training phase (e.g., by acknowledging the limitation or searching for additional data with Dmax = 0).
+
+2. **Regression Datasets Created:**
+   - Dropped rows with missing target values to ensure clean training data.
+   - **Tl Prediction:** Saved as `data/features/regression_Tl_data.csv` (823 records).
+   - **Tx Prediction:** Saved as `data/features/regression_Tx_data.csv` (856 records).
+   - **Tg Prediction:** Saved as `data/features/regression_Tg_data.csv` (883 records).
+
+![target datasets](screenshots/target_datasets.png)
