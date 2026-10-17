@@ -29,7 +29,7 @@ def main():
     
     # Defining the columns we want to keep as input features
     # We drop the targets and metadata like Reference, Zmax, Tx_Flag
-    cols_to_drop = ['Tg_[K]', 'Tx_[K]', 'Tl_[K]', 'Dmax_[mm]', 'Reference', 'Zmax_[mm]', 'Tx_Flag']
+    cols_to_drop = ['Tg_[K]', 'Tx_[K]', 'Tl_[K]', 'Dmax_[mm]', 'Reference', 'Zmax_[mm]', 'Tx_Flag','Dmax_label']
     feature_cols = [c for c in df.columns if c not in cols_to_drop]
     
     # --- Task 1: Predicting Tl (Liquidus Temperature) ---
