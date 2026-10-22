@@ -1,9 +1,11 @@
 import pandas as pd
 import numpy as np
+import itertools
 from sklearn.feature_selection import VarianceThreshold, SelectKBest, f_regression, RFE
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import cross_val_score
 
 def perform_feature_selection(target_name):
     print(f"\n{'='*40}")
@@ -42,23 +44,46 @@ def perform_feature_selection(target_name):
     rf = RandomForestRegressor(n_estimators=100, random_state=42)
     rf.fit(X_corr, y)
     importances = rf.feature_importances_
-    important_features = X_corr.columns[importances > 0.01]
+    important_features = X_corr.columns[importances > 0.005]
     X_embed = X_corr[important_features]
     print(f"After Embedded Method: {X_embed.shape[1]} features")
     
     # --- Recursive Feature Elimination (RFE) ---
+    #Let RFE reduce the features down to the top 10
     estimator = LinearRegression()
     rfe = RFE(estimator=estimator, n_features_to_select=10)
     X_rfe = rfe.fit_transform(X_embed, y)
-    selected_features = X_embed.columns[rfe.get_support()]
-    print(f"After Recursive Feature Elimination: {len(selected_features)} features")
+    rfe_features = X_embed.columns[rfe.get_support()]
+    print(f"After Recursive Feature Elimination: {len(rfe_features)} features")
+
+     # --- Exhaustive Search ---
+    print("Running Exhaustive Search to find the best 4 features...")
     
-    # --- Final Selection (Top 4) ---
-    final_features = selected_features[:4] 
-    print(f"\n--- FINAL SELECTED FEATURES (Top 4 for {target_name}) ---")
+    best_score = -float('inf')
+    best_combo = None
+    
+    # Testing every combination of 4 features from the RFE pool
+    # (Note: 10 choose 4 is 210 combinations. This is fast to compute).
+    for combo in itertools.combinations(rfe_features, 4):
+        # Selecting the 4 features
+        X_subset = X_embed[list(combo)]
+        
+        # Evaluating using 5-fold cross-validation (R2 score)
+        # We use R2 because a higher R2 means a better fit
+        scores = cross_val_score(LinearRegression(), X_subset, y, cv=5, scoring='r2')
+        mean_score = scores.mean()
+        
+        if mean_score > best_score:
+            best_score = mean_score
+            best_combo = combo
+            
+    final_features = list(best_combo)
+    
+    print(f"\n--- FINAL SELECTED FEATURES (Best 4 via Exhaustive Search for {target_name}) ---")
     for i, feat in enumerate(final_features, 1):
         print(f"{i}. {feat}")
-        
+    print(f"Best Cross-Validation R2 Score: {best_score:.4f}")
+   
     # --- Saving Reduced Dataset ---
     final_columns = ['Composition', target_col] + list(final_features)
     final_df = df[final_columns].copy()
