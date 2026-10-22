@@ -26,7 +26,10 @@ This project aims to reproduce and extend the machine learning pipeline from the
 - [x] Day 6: Saved final feature dataset and separated targets.
 - [x] Day 7: Prepared target datasets.
 - [x] Day 8: Prepared target datasets (Classification & Regression) and fixed data leakage.
+- [x] Day 9:Completed Feature Selection(Variance,F-test,Embedded,RFE,Exhaustive Search) for Tl,Tx, and Tg.
 
 ## 🛠️ Technologies Used
-- Python (Pandas, NumPy, Matminer, Pymatgen)
-- Git & GitHub for version control
+- **Python** (Pandas, NumPy)
+- **Materials Science Libraries** (Pymatgen, Matminer)
+- **Machine Learning** (Scikit-Learn)
+- **Version Control** (Git & GitHub)
