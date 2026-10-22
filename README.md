@@ -25,6 +25,7 @@ This project aims to reproduce and extend the machine learning pipeline from the
 - [x] Day 5: Documented feature comparison between paper and matminer.
 - [x] Day 6: Saved final feature dataset and separated targets.
 - [x] Day 7: Prepared target datasets.
+- [x] Day 8: Prepared target datasets (Classification & Regression) and fixed data leakage.
 
 ## 🛠️ Technologies Used
 - Python (Pandas, NumPy, Matminer, Pymatgen)
