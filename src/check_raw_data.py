@@ -1,23 +1,25 @@
 import pandas as pd
+import os
 
-raw_file_path = 'C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\data\\raw\\train-00000-of-00001.parquet' 
+# Getting the absolute path of the current script's directory (src)
+current_dir = os.path.dirname(os.path.abspath(__file__))
+# Go up one level to the main project folder, then into data/raw
+project_root = os.path.dirname(current_dir)
+raw_file_path = os.path.join(project_root, 'data', 'raw', 'train-00000-of-00001.parquet')
+
+print(f"Looking for file at: {raw_file_path}")
 
 try:
-    # Parquet files require a special engine, pandas handles it automatically
     df = pd.read_parquet(raw_file_path)
     
     print(f"Successfully loaded raw data!")
     print(f"Total records: {len(df)}")
     print(f"Columns: {df.columns.tolist()}\n")
     
-    # Checking the Dmax column
-    # We use a try/except just in case the column name is slightly different
     try:
-        # Counting how many have Dmax = 0
         zeros = df[df['Dmax_[mm]'] == 0]
         print(f"Records with Dmax = 0 (Negative Class): {len(zeros)}")
         
-        # Counting how many have Dmax > 0
         positives = df[df['Dmax_[mm]'] > 0]
         print(f"Records with Dmax > 0 (Positive Class): {len(positives)}")
         
@@ -27,4 +29,3 @@ try:
 
 except Exception as e:
     print(f"Error loading file: {e}")
-    print("Check if the file path and name are correct.")
