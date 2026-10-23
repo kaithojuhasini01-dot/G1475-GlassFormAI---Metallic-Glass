@@ -14,9 +14,9 @@ This project aims to reproduce and extend the machine learning pipeline from the
 **Guide:** Mr. P. Sreenivas
 
 ## 📂 Repository Structure
-- `data/` : Contains raw, cleaned, and feature datasets.
+- `data/` : Contains raw, cleaned, features and ml_datasets.
 - `documentation/` : Daily logs and reports of the work done.
-- `src/` : Python scripts for data processing and feature generation.
+- `src/` : Python scripts for data processing, feature generation, feature selection and train/test spliting.
 
 ## 🚀 Progress Tracker
 - [x] Milestone 1: Data processing and elemental fraction generation.
@@ -26,10 +26,12 @@ This project aims to reproduce and extend the machine learning pipeline from the
 - [x] Day 6: Saved final feature dataset and separated targets.
 - [x] Day 7: Prepared target datasets.
 - [x] Day 8: Prepared target datasets (Classification & Regression) and fixed data leakage.
-- [x] Day 9:Completed Feature Selection(Variance,F-test,Embedded,RFE,Exhaustive Search) for Tl,Tx, and Tg.
+- [x] Day 9: Completed Feature Selection(Variance,F-test,Embedded,RFE,Exhaustive Search) for Tl,Tx, and Tg.
+- [x] Day 10: Prepared Machine Learning datasets (80/20 Train-Test split) for Regression models. 
 
 ## 🛠️ Technologies Used
-- **Python** (Pandas, NumPy)
-- **Materials Science Libraries** (Pymatgen, Matminer)
-- **Machine Learning** (Scikit-Learn)
-- **Version Control** (Git & GitHub)
+- **Programming Language:** Python 3
+- **Data Manipulation:** Pandas, NumPy
+- **Materials Science & Feature Engineering:** Pymatgen, Matminer
+- **Machine Learning & Evaluation:** Scikit-Learn
+- **Version Control:** Git & GitHub
