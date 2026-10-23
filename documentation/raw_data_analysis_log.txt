@@ -1,0 +1,23 @@
+# Raw Data Analysis Log (Classification Check)
+
+**Date:** 23-10-2026
+
+## Purpose
+Before training the classification models, we needed to verify the distribution of the target variable `Dmax_[mm]`. The base paper requires a binary classification task where `Dmax > 0` is the positive class and `Dmax = 0` is the negative class.
+
+## What was done:
+We created a script (`src/check_raw_data.py`) to load the original raw parquet file from Hugging Face and count the number of positive and negative classes.
+
+## Results
+The script successfully loaded the raw dataset and revealed the following:
+- **Total records:** 998
+- **Records with Dmax = 0 (Negative Class):** 0
+- **Records with Dmax > 0 (Positive Class):** 998
+
+## Conclusion & Impact on the Project
+The dataset is highly imbalanced and contains **only positive examples** of metallic glass formation. 
+
+Because there are no negative examples (Dmax = 0), it is mathematically impossible to train a meaningful binary classification model. A model trained on this data would simply learn to predict the majority class (1) for every input, achieving a "dummy" accuracy of 100% but failing to identify alloys that cannot form glass.
+
+**Action Taken:** 
+We proceeded to train the classification model (XGBoost) to fulfill the implementation requirement, but we clearly state that the 100% accuracy is a limitation of the dataset. The core focus of our project shifted to the Regression models (Tl, Tx, Tg), which have continuous, varied targets and provide real, meaningful R² scores.
