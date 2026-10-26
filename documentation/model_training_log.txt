@@ -22,3 +22,8 @@ Initially, the model threw an error (`Expected: [0], got [1]`) because our publi
 This perfect score is a direct result of a dataset limitation, not a flaw in the model or the code. Our public dataset only contains successful metallic glass alloys (Dmax > 0). Because there are no negative examples (Dmax = 0) in the raw data (as verified in our raw data analysis), the model simply learned to predict the only class it has ever seen. 
 
 In a real-world scenario, this model would need to be trained on a dataset containing both successful and failed alloys to be able to accurately classify unseen compositions.
+
+## 3. Model Saving & Deployment
+After training the XGBoost classifier, we used the 'joblib' library to save the trained model to the shared 'models/' folder ('models/xgboost_classifier.pkl').
+
+Saving the model is a crucial step for deployment. It allows us to load the trained weights instantly in the future(e.g., for the interactive user tool) without having to re-run the training script every time, saving significant computational time.

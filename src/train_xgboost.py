@@ -1,4 +1,5 @@
 import pandas as pd
+import joblib 
 from xgboost import XGBClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
@@ -60,7 +61,11 @@ def main():
         'F1-Score': f1
     }])
     results_df.to_csv('C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\results\\classification_xgboost_results.csv', index=False)
-    print("\nResults saved to 'C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\results\\classification_xgboost_results.csv'")
+
+    #---Saving the model ---
+    os.makedirs('C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\models', exist_ok=True)
+    joblib.dump(model, 'C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\models\\xgboost_classifier.pkl')
+    print("\nTrained Model saved to 'C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\models\\xgboost_classifier.pkl'")
 
 if __name__ == "__main__":
     main()
