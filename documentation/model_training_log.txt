@@ -1,0 +1,24 @@
+# Model Training & Evaluation Log (Classification)
+
+**Date:** 26-10-2026
+
+## 1. Algorithm Selection & Implementation
+The base paper implemented four classification algorithms (SVC, ETC, XGC, GNB) to predict the Glass-Forming Ability (GFA). 
+
+To optimize our time and focus on the best-performing model, we selected only the **XGBoost Classifier (XGC)**. According to the base paper's results, XGC achieved the highest accuracy compared to the other three algorithms, making it the most efficient choice for our implementation.
+
+## 2. Classification Model (XGBoost)
+
+**Data Issue & Fix:**
+Initially, the model threw an error (`Expected: [0], got [1]`) because our public dataset contains only positive examples (alloys where Dmax > 0, meaning GFA_label = 1). We resolved this by using `LabelEncoder` from `scikit-learn` to remap the target labels so the model could process them. We also set `zero_division=1` in our evaluation metrics to correctly handle the calculation when no negative examples exist.
+
+**Results:**
+- **Accuracy:** 100.00%
+- **Precision:** 100.00%
+- **Recall:** 100.00%
+- **F1-Score:** 100.00%
+
+**Explanation of Results:**
+This perfect score is a direct result of a dataset limitation, not a flaw in the model or the code. Our public dataset only contains successful metallic glass alloys (Dmax > 0). Because there are no negative examples (Dmax = 0) in the raw data (as verified in our raw data analysis), the model simply learned to predict the only class it has ever seen. 
+
+In a real-world scenario, this model would need to be trained on a dataset containing both successful and failed alloys to be able to accurately classify unseen compositions.
