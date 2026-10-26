@@ -16,6 +16,7 @@ This project aims to reproduce and extend the machine learning pipeline from the
 ## 📂 Repository Structure
 - `data/` : Contains raw, cleaned, features and ml_datasets (train/test splits).
 - `documentation/` : Daily logs and reports, and feature selection analysis.
+- `models/` : Saved trained models.
 - `results/` : Model evaluatioon metrics and performance CSVs.
 - `src/` : Python scripts for data processing, feature generation, feature selection, and model training. 
 
@@ -29,11 +30,12 @@ This project aims to reproduce and extend the machine learning pipeline from the
 - [x] Day 8: Prepared target datasets (Classification & Regression) and fixed data leakage.
 - [x] Day 9: Completed Feature Selection(Variance,F-test,Embedded,RFE,Exhaustive Search) for Tl,Tx, and Tg.
 - [x] Day 10: Prepared Machine Learning datasets (80/20 Train-Test split) for Regression models.
-- [x] Day 11: Implemented XGBoost Classification model and documented dataset limitations. 
+- [x] Day 11: Implemented and saved XGBoost Classification model.Documented dataset limitations. 
 
 ## 🛠️ Technologies Used
 - **Programming Language:** Python 3
 - **Data Manipulation:** Pandas, NumPy
 - **Materials Science & Feature Engineering:** Pymatgen, Matminer
 - **Machine Learning & Evaluation:** Scikit-Learn, XGBoost
+- **Model Saving & Deployment:** Joblib
 - **Version Control:** Git & GitHub
