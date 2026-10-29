@@ -1,0 +1,4 @@
+Target,Model,Train_R2,Test_R2,Test_MAE,Test_MSE
+Tl,ETR,1.0,0.9685,29.61,2115.82
+Tx,ETR,1.0,0.9683,17.02,993.86
+Tg,ETR,1.0,0.9802,15.91,604.64
