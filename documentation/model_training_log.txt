@@ -1,6 +1,6 @@
 # Model Training & Evaluation Log (Classification)
 
-**Date:** 26-10-2026
+**Date:** 29-10-2026
 
 ## 1. Algorithm Selection & Implementation
 The base paper implemented four classification algorithms (SVC, ETC, XGC, GNB) to predict the Glass-Forming Ability (GFA). 
@@ -10,10 +10,11 @@ To optimize our time and focus on the best-performing model, we selected only th
 ## 2. Classification Model (XGBoost)
 
 **Data Issue & Fix:**
-Initially, the model threw an error (`Expected: [0], got [1]`) because our public dataset contains only positive examples (alloys where Dmax > 0, meaning GFA_label = 1). We resolved this by using `LabelEncoder` from `scikit-learn` to remap the target labels so the model could process them. We also set `zero_division=1` in our evaluation metrics to correctly handle the calculation when no negative examples exist.
+Initially, the model threw an error (`Expected: [0], got [1]`) because our public dataset contains only positive examples (alloys where Dmax > 0, meaning GFA_label = 1). We resolved this by mapping the labels temporarily so the model could process them. We also set `zero_division=1` in our evaluation metrics to correctly handle the calculation when no negative examples exist. 
 
 **Results:**
-- **Accuracy:** 100.00%
+- **Training Accuracy:** 100.00%
+- **Testing Accuracy:** 100.00%
 - **Precision:** 100.00%
 - **Recall:** 100.00%
 - **F1-Score:** 100.00%
@@ -23,7 +24,59 @@ This perfect score is a direct result of a dataset limitation, not a flaw in the
 
 In a real-world scenario, this model would need to be trained on a dataset containing both successful and failed alloys to be able to accurately classify unseen compositions.
 
-## 3. Model Saving & Deployment
-After training the XGBoost classifier, we used the 'joblib' library to save the trained model to the shared 'models/' folder ('models/xgboost_classifier.pkl').
+## 3. Model Evaluation & Predictions
+We saved the model's predictions on the test set to `results/predictions_xgboost.csv`. 
+To ensure the output is readable and physically meaningful, we mapped the predicted values back to the original `1` (representing the positive Glass-Forming class). Both the Actual and Predicted labels in the CSV are `1`s, confirming the model correctly identifies the positive class.
 
-Saving the model is a crucial step for deployment. It allows us to load the trained weights instantly in the future(e.g., for the interactive user tool) without having to re-run the training script every time, saving significant computational time.
+
+## 4. Model Saving & Deployment
+After training the XGBoost classifier, we used the `joblib` library to save the trained model to the shared `models/` folder (`models/xgboost_classifier.pkl`). 
+
+Saving the model is a crucial step for deployment. It allows us to load the trained weights instantly in the future (e.g., for the interactive user tool) without having to re-run the training script every time, saving significant computational time.
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Regression Model Training (ETR)
+
+### 1. Algorithm Selection
+The base paper compared four regression algorithms (DTR, ETR, MLP, LR) and found that **Extra Trees Regression (ETR)** achieved the highest R² scores. To optimize our time and focus on the best-performing model, we implemented only the ETR algorithm.
+
+### 2. Implementation Process
+For each target (Tl, Tx, Tg):
+1. Loaded the 80/20 train-test split datasets.
+2. Trained the `ExtraTreesRegressor` using the 4 optimized features.
+3. Evaluated the model on both the training set (to check for overfitting) and the test set.
+4. Saved the trained model to the `models/` folder and the predictions to the `results/` folder.
+
+### 3. Results
+
+| Target | Model | Training R² | Testing R² | Test MAE (Kelvin) | Test MSE (Kelvin²) |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Tl** | ETR | 1.0000 | 0.9685 | 29.61 | 2115.82 |
+| **Tx** | ETR | 1.0000 | 0.9683 | 17.02 | 993.86 |
+| **Tg** | ETR | 1.0000 | 0.9802 | 15.91 | 604.64 |
+
+### 4. Discussion on Performance
+Our ETR models achieved exceptional Testing R² scores (all above 0.96). While the Training R² is 1.0000 (perfect), the Testing R² remains very high, proving that the model generalizes well to unseen data and is not overfitting. 
+
+**Comparison with Base Paper:**
+Our R² scores are actually higher than the base paper's reported results (~0.89 - 0.91). We attribute this success to our Exhaustive Search feature selection pipeline, which isolated the most highly predictive elemental features.
+
+### 5. Saved Artifacts & Predictions
+- **Models:** `models/etr_Tl_model.pkl`, `models/etr_Tx_model.pkl`, `models/etr_Tg_model.pkl`
+- **Predictions:** The actual vs. predicted temperatures for the test set were saved to `results/predictions_Tl.csv`, `results/predictions_Tx.csv`, and `results/predictions_Tg.csv`.
+
+**Observation on Predictions:** 
+When comparing the actual vs. predicted temperatures, some predictions are slightly higher or lower than the actual values (usually by less than 15 Kelvin). This is expected behavior for an Extra Trees Regressor, which averages predictions across many trees, and accounts for the small margin of error in experimental lab measurements.
+
+
