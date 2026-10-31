@@ -1,0 +1,57 @@
+# Model Interpretation Log
+
+**Date:** 31-10-2026
+
+## 1. What was done:
+We generated Feature Importance plots, Partial Dependence Plots (PDP), and Individual Conditional Expectation (ICE) plots for our Regression models (\(T_l\), \(T_x\), and \(T_g\)). This analysis helps us understand *why* the Extra Trees Regressor (ETR) makes its predictions.
+
+## 2. Feature Importance Analysis (Which features are important?)
+### For Tl (Liquidus Temperature)
+![Feature Importance for Tl](screenshots/feature_importance_Tl.png)
+
+### For Tx (Crystallization Temperature)
+![Feature Importance for Tx](screenshots/feature_importance_Tx.png)
+
+### For Tg (Glass Transition Temperature)
+![Feature Importance for Tg](screenshots/feature_importance_Tg.png)
+
+**Explanation of Results:**
+- **For \(T_l\) and \(T_x\):** The models relied heavily on `MagpieData mean MeltingT` and `MagpieData mode GSmagmom`. 
+- **For \(T_g\):** The model relied on `Mean MeltingT`, `Mean Column`, and `Mean Electronegativity`.
+
+**Why do they differ?** \(T_l\) and \(T_x\) are high-temperature phase transitions that occur during melting/crystallization, so the melting point is the dominant driver. However, \(T_g\) (Glass Transition) depends more on the chemical structure and bonding (electronegativity), which is why the model shifted its reliance to different features.
+
+## 3. PDP and ICE Analysis (How do they influence predictions?)
+### For Tl(Liquidus Temperature)
+**Feature: Mean Melting Temperature**
+![PDP ICE Tl MeltingT](screenshots/pdp_ice_Tl_MagpieData_mean_MeltingT.pnp)
+
+**Feature: Mode GSmagmom**
+![PDP ICE Tl GSmagmom](screenshots/pdp_ice_Tl_MagpieData_mode_GSmagmom.pnp)
+
+### For Tx(Crystallization Temperature)
+**Feature: Mean Melting Temperature**
+![PDP ICE Tx MeltingT](screenshots/pdp_ice_Tx_MagpieData_mean_MeltingT.pnp)
+
+**Feature: Mode GSmagmom**
+![PDP ICE Tx GSmagmom](screenshots/pdp_ice_Tx_MagpieData_mode_GSmagmom.pnp)
+
+### For Tg(Glass Transition Temperature)
+**Feature: Mean Melting Temperature**
+![PDP ICE Tg MeltingT](screenshots/pdp_ice_Tg_MagpieData_mean_MeltingT.pnp)
+
+**Feature: Mean Column**
+![PDP ICE Tg Column](screenshots/pdp_ice_Tg_MagpieData_mean_Column.png)
+
+**Explanation of Observed Trends:**
+- **Positive Correlation:** The PDP plots show a clear upward trend. As the Mean Melting Temperature increases, the predicted \(T_l\), \(T_x\), and \(T_g\) also increase. This matches real-world physics: alloys with high-melting-point elements require more thermal energy to transition phases.
+- **Threshold Steps:** The ICE lines show sharp "steps" or jumps. This is characteristic of the Extra Trees model, which creates mathematical "buckets" (splits). For example, the model learned that if the magnetic moment crosses 0.6, the predicted temperature should jump to a higher regime.
+- **Individual Variation:** The wide vertical spread of the thin blue ICE lines proves that while melting temperature is the most important feature, the other 3 features are still crucial for determining the exact prediction for a specific alloy.
+
+## 4. Comparison with the Base Paper
+**What the paper did:** The base paper generated Feature Importance for all three targets, but only generated PDP/ICE plots for \(T_l\).
+**What we did:** We generated standard 1D PDP and ICE plots for the top 2 features across **all three** targets. 
+**Why it differs:** Our top features differ slightly from the paper (they found Electronegativity for \(T_l\), we found Melting Temperature). This is expected because we used automated `matminer` features, while they used hand-crafted features. However, our physical conclusions align perfectly with the paper's goal of explaining the "black box" model.
+
+## 5. Limitations of Model Interpretation
+**Limitation:** While our plots show that increasing `Mean MeltingT` increases the predicted \(T_l\), this does not prove that melting temperature *causes* the Liquidus Temperature in a controlled experimental vacuum. It simply proves that the Machine Learning model *learned this correlation* from the 998 experimental records. Experimental validation in a lab is always required to confirm the physics.
