@@ -4,7 +4,7 @@
 
 This project reproduces and extends the machine learning pipeline from the paper "Machine Learning Aided Prediction of Glass-Forming Ability of Metallic Glass" (Liu et al., 2023). We successfully built predictive models to determine whether an alloy can form a metallic glass and to predict its key thermal properties (Tl, Tx, Tg). 
 
-Beyond just prediction, we performed comprehensive **Model Interpretation** using Feature Importance, Partial Dependence Plots (PDP), and Individual Conditional Expectation (ICE) plots to explain *how* the models make their decisions. Our final ETR regression models achieved an exceptional **R² score > 0.96**, outperforming the base paper's reported results.
+Beyond just prediction, we performed comprehensive **Model Interpretation** using Feature Importance, Partial Dependence Plots (PDP), and Individual Conditional Expectation (ICE) plots to explain *how* the models make their decisions. Our final ETR regression models achieved an exceptional **R² score > 0.96**, outperforming the base paper's reported results. Finally, we used our predicted temperatures to calculate the **Gamma (\(\gamma\)) GFA parameter**, successfully identifying novel alloys with high predicted glass-forming ability.
 
 ## 👥 Team Members
 - Hasini Kaithoju (26P85A0502)
@@ -20,8 +20,8 @@ Beyond just prediction, we performed comprehensive **Model Interpretation** usin
 - `data/` : Contains raw, cleaned, features and ml_datasets (train/test splits).
 - `documentation/` : Daily logs, reports, feature selection analysis, screenshots and source evidence.
 - `models/` : Saved trained models(.pkl files) for classification and regression.
-- `results/` : Model evaluatioon metrics (CSV), predictions, and interpretation plots(PDP/ICE).
-- `src/` : Python scripts for data processing, feature generation, selection, training, and interpretation.
+- `results/` : Model evaluatioon metrics (CSV), predictions, and interpretation plots(PDP/ICE), and GFA calculation.
+- `src/` : Python scripts for data processing, feature generation, selection, training, interpretation, and GFA calculation.
 
 ## 🚀 Progress Tracker
 - [x] Milestone 1: Data processing and elemental fraction generation.
@@ -36,6 +36,7 @@ Beyond just prediction, we performed comprehensive **Model Interpretation** usin
 - [x] Day 11: Implemented and saved XGBoost Classification model.Documented dataset limitations.
 - [x] Day 12: Trained and saved ETR Regression models(R^2 > 0.96), saved predictions, and all documentation logs.
 - [x] Day 13: Completed Model Interpretation(Feature Importance, PDP, and ICE plots) for all targets.
+- [x] Day 14: Calculated GFA parameters (Gamma) using predicted temperatures and saved results.
 
 ## 🛠️ Technologies Used
 - **Programming Language:** Python 3
