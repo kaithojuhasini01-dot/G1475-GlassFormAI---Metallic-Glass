@@ -4,7 +4,9 @@
 
 This project reproduces and extends the machine learning pipeline from the paper "Machine Learning Aided Prediction of Glass-Forming Ability of Metallic Glass" (Liu et al., 2023). We successfully built predictive models to determine whether an alloy can form a metallic glass and to predict its key thermal properties (Tl, Tx, Tg). 
 
-Beyond just prediction, we performed comprehensive **Model Interpretation** using Feature Importance, Partial Dependence Plots (PDP), and Individual Conditional Expectation (ICE) plots to explain *how* the models make their decisions. Our final ETR regression models achieved an exceptional **R² score > 0.96**, outperforming the base paper's reported results. Finally, we used our predicted temperatures to calculate the **Gamma (\(\gamma\)) GFA parameter**, successfully identifying novel alloys with high predicted glass-forming ability.
+Beyond just prediction, we performed comprehensive **Model Interpretation** using Feature Importance, Partial Dependence Plots (PDP), and Individual Conditional Expectation (ICE) plots to explain *how* the models make their decisions. Our final ETR regression models achieved an exceptional **R² score > 0.96**, outperforming the base paper's reported results. 
+
+Finally, we used our predicted temperatures to calculate the **Gamma (\(\gamma\)) GFA parameter**, and implemented the advanced **NSGA-II Genetic Algorithm** (executed via Google Colab) to optimize the Zr-Cu-Ni-Al composition, successfully identifying novel alloys with high predicted glass-forming ability.
 
 ## 👥 Team Members
 - Hasini Kaithoju (26P85A0502)
@@ -18,10 +20,11 @@ Beyond just prediction, we performed comprehensive **Model Interpretation** usin
 
 ## 📂 Repository Structure
 - `data/` : Contains raw, cleaned, features and ml_datasets (train/test splits).
-- `documentation/` : Daily logs, reports, feature selection analysis, screenshots and source evidence.
+- `documentation/` : Comprehensive logs for data processing, model training, interpretation, GFA calculation, and NSGA-II optimization.
 - `models/` : Saved trained models(.pkl files) for classification and regression.
-- `results/` : Model evaluatioon metrics (CSV), predictions, and interpretation plots(PDP/ICE), and GFA calculation.
-- `src/` : Python scripts for data processing, feature generation, selection, training, interpretation, and GFA calculation.
+- `notebooks/` : Jupyter Notebook containing the executed NSGA-II optimization code and outputs.
+- `results/` : Model evaluatioon metrics (CSV), predictions, and interpretation plots(PDP/ICE), GFA parameters, and the final NSGA-II optimized compositions.
+- `src/` : Python scripts for data processing, feature generation, selection, training, interpretation, GFA calculation and optimization.
 
 ## 🚀 Progress Tracker
 - [x] Milestone 1: Data processing and elemental fraction generation.
@@ -37,12 +40,34 @@ Beyond just prediction, we performed comprehensive **Model Interpretation** usin
 - [x] Day 12: Trained and saved ETR Regression models(R^2 > 0.96), saved predictions, and all documentation logs.
 - [x] Day 13: Completed Model Interpretation(Feature Importance, PDP, and ICE plots) for all targets.
 - [x] Day 14: Calculated GFA parameters (Gamma) using predicted temperatures and saved results.
+- [x] Day 15: Implemented and executed NSGA-II optimization (via Colab) to generate novel alloy compositions.
 
 ## 🛠️ Technologies Used
-- **Programming Language:** Python 3
-- **Data Manipulation:** Pandas, NumPy
-- **Materials Science & Feature Engineering:** Pymatgen, Matminer
-- **Machine Learning & Evaluation:** Scikit-Learn, XGBoost(Classification), ETR(Regression)
-- **Model Interpretation & Visualization:** Matplotlib, Seaborn
-- **Model Saving & Deployment:** Joblib
-- **Version Control:** Git & GitHub
+
+**Programming Language & Environment**
+- Python 3
+- Google Colab / Jupyter Notebook (for executing the NSGA-II optimization)
+- VS Code (for core development)
+
+**Data Manipulation & Processing**
+- Pandas, NumPy
+- Pymatgen (for parsing chemical formulas into elemental fractions)
+
+**Feature Engineering & Selection**
+- Matminer (Magpie preset for generating 140 numerical descriptors)
+- Scikit-Learn (Variance filter, F-test, Recursive Feature Elimination)
+
+**Machine Learning & Optimization**
+- Scikit-Learn (LabelEncoder, Linear Regression, Data Splitting)
+- XGBoost (XGC for Classification)
+- Scikit-Learn ExtraTreesRegressor (ETR for Regression)
+- Pymoo (NSGA-II Genetic Algorithm for Composition Optimization)
+
+**Model Interpretation & Visualization**
+- Matplotlib, Seaborn (Feature Importance, PDP, and ICE plots)
+
+**Model Saving & Deployment**
+- Joblib (saving `.pkl` models)
+
+**Version Control**
+- Git & GitHub
