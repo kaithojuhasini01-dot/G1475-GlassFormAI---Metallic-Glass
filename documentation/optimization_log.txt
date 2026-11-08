@@ -1,0 +1,36 @@
+# NSGA-II Composition Optimization Log
+
+**Date:** 08-11-2026
+
+## 1. Implementation & Execution
+We successfully implemented and executed the NSGA-II genetic algorithm to optimize the Zr-Cu-Ni-Al composition for maximum Glass-Forming Ability (GFA). 
+
+**Operating System Challenge:** We initially attempted to run the script locally in VS Code on a Windows OS. However, we encountered a known Windows multiprocessing `RuntimeError` when `pymoo` tried to run parallel processes with `pymatgen` and `matminer`. 
+
+**Resolution:** To overcome this, we executed the exact same script on **Google Colab (Linux environment)**, which handles multiprocessing natively and successfully bypassed the Windows limitation.
+
+## 2. Parameters & Computational Limits
+The base paper utilized an Initial Population of 200 and 300 Generations. However, evaluating the `pymatgen` and `matminer` features for 60,000 compositions is computationally expensive on a standard Google Colab CPU (taking over 10 hours). 
+
+To demonstrate the algorithm's functionality within our time constraints, we ran the optimization with:
+- **Population Size:** 50
+- **Generations:** 20
+- **Search Space:** Cu (5-20%), Ni (5-20%), Al (5-10%), Zr (balance).
+
+Even with these reduced parameters, the genetic algorithm successfully converged to a highly optimized Pareto front.
+
+## 3. Results (Top 5 Optimized Alloys)
+The algorithm successfully generated novel candidate alloy compositions predicted to have high GFA.
+
+| Cu_wt% | Ni_wt% | Al_wt% | Zr_wt% | Formula | Pred_Tl | Pred_Tx | Pred_Tg |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 10.79 | 17.54 | 5.02 | 66.62 | Zr66.6Cu10.8Ni17.5Al5.0 | 1119.06 | 689.11 | 636.50 |
+| 19.85 | 10.30 | 9.87 | 59.95 | Zr60.0Cu19.9Ni10.3Al9.9 | 1162.02 | 790.25 | 740.99 |
+| 19.30 | 12.42 | 9.98 | 58.28 | Zr58.3Cu19.3Ni12.4Al10.0 | 1138.79 | 777.22 | 740.87 |
+| 19.96 | 13.39 | 9.89 | 56.75 | Zr56.8Cu20.0Ni13.4Al9.9 | 1125.72 | 776.92 | 710.49 |
+| 11.95 | 18.07 | 5.85 | 64.10 | Zr64.1Cu12.0Ni18.1Al5.9 | 1165.95 | 749.64 | 647.93 |
+
+*(These results are also saved in `results/nsga2_optimized_compositions.csv`, and the executed notebook is saved in `notebooks/GlassFormAI_NSGA2_Optimization.ipynb`)*
+
+## 4. Significance
+The NSGA-II algorithm successfully optimized the composition to maximize the Gamma parameter, identifying alloys with very high predicted Crystallization (\(T_x\)) and Glass Transition (\(T_g\)) temperatures. These candidates represent novel alloys predicted to have high Glass-Forming Ability.
