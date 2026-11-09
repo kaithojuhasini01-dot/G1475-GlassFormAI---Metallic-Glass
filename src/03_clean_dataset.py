@@ -1,8 +1,13 @@
 import pandas as pd
+import os
+
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+data_dir = os.path.join(project_root, "data")
+
+input_file = os.path.join(data_dir, "cleaned", "metallic_glass_cleaned.csv")
+output_file = os.path.join(data_dir, "cleaned", "metallic_glass_cleaned.csv")
 
 # Read the copied dataset from the cleaned folder
-input_file = "C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\data\\cleaned\\metallic_glass_cleaned.csv"
-
 df = pd.read_csv(input_file)
 
 # Check the original value
@@ -16,9 +21,7 @@ if df.loc[370, "Tl_[K]"] == 97:
 else:
     print("\nRow 370 was not changed because its value is not 97 K.")
 
-# Save the cleaned dataset
-output_file = "C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\data\\cleaned\\metallic_glass_cleaned.csv"
-df.to_csv(output_file, index=False)
+df["Tx_Flag"] = ""
 
 # Check the corrected value
 print("\nAfter correction:")
@@ -33,7 +36,7 @@ else:
     print("Row 780 does not contain Tx = 75 K.")
 
 
-output_file = "C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\data\\cleaned\\metallic_glass_cleaned.csv"
+output_file = os.path.join(data_dir, "cleaned", "metallic_glass_cleaned.csv")
 df.to_csv(output_file, index=False)
 
 print(df.loc[780, ["Composition", "Tg_[K]", "Tx_[K]", "Tl_[K]", "Dmax_[mm]", "Tx_Flag"]])

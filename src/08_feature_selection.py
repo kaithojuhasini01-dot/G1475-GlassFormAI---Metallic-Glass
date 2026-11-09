@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import os   
 import itertools
 from sklearn.feature_selection import VarianceThreshold, SelectKBest, f_regression, RFE
 from sklearn.ensemble import RandomForestRegressor
@@ -7,13 +8,17 @@ from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import cross_val_score
 
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 def perform_feature_selection(target_name):
     print(f"\n{'='*40}")
     print(f"--- FEATURE SELECTION FOR: {target_name} ---")
     print(f"{'='*40}\n")
     
     # 1. Loading the regression dataset for the specific target
-    input_file = f'C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\data\\features\\regression_{target_name}_data.csv'
+    input_file = os.path.join(project_root, 'data', 'features', f'regression_{target_name}_data.csv')
+    features_dir = os.path.join(project_root, 'data', 'features')
+
     df = pd.read_csv(input_file)
     
     # 2. Separating features (X) and target (y)
@@ -87,8 +92,10 @@ def perform_feature_selection(target_name):
     # --- Saving Reduced Dataset ---
     final_columns = ['Composition', target_col] + list(final_features)
     final_df = df[final_columns].copy()
-    output_file = f'C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\data\\features\\selected_features_{target_name}.csv'
+
+    output_file = os.path.join(project_root, 'data', 'features', f'selected_features_{target_name}.csv')
     final_df.to_csv(output_file, index=False)
+    
     print(f"\nReduced dataset saved to '{output_file}'")
     print(f"New dataset shape: {final_df.shape}")
 

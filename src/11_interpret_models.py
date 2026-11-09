@@ -5,18 +5,25 @@ import seaborn as sns
 from sklearn.inspection import PartialDependenceDisplay
 import os
 
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 def interpret_model(target_name):
     print(f"\n--- INTERPRETING MODEL FOR: {target_name} ---")
     
     # 1. Loading the trained model
-    model_path = f'C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\models\\etr_{target_name}_model.pkl'
+    model_path = os.path.join(project_root, 'models', f'etr_{target_name}_model.pkl')
+    test_data_path = os.path.join(project_root, 'data', 'ml_datasets', f'test_{target_name}.csv')
+    results_dir = os.path.join(project_root, 'results')
+
+    os.makedirs(results_dir, exist_ok=True)
+
     if not os.path.exists(model_path):
         print(f"Model {model_path} not found. Skipping.")
         return
     model = joblib.load(model_path)
     
     # 2. Loading the test data
-    test_df = pd.read_csv(f'C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\data\\ml_datasets\\test_{target_name}.csv')
+    test_df = pd.read_csv(test_data_path)
     target_col = f'{target_name}_[K]'
     X_test = test_df.drop(columns=[target_col])
     
@@ -30,9 +37,11 @@ def interpret_model(target_name):
     sns.barplot(x='Importance', y='Feature', data=importance_df, hue='Feature', palette='viridis', legend=False)
     plt.title(f'Feature Importance for {target_name} Prediction')
     plt.tight_layout()
-    plt.savefig(f'C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\results\\feature_importance_{target_name}.png')
+
+    fi_output = os.path.join(project_root, 'results', f'feature_importance_{target_name}.png')
+    plt.savefig(fi_output)
     plt.close()
-    print(f"  Saved Feature Importance plot.")
+    print(f"  Saved Feature Importance plot to {fi_output}.")
 
     # 4. PDP and ICE Plots (For the Top 2 Important Features)
     top_features = importance_df['Feature'].head(2).tolist()
@@ -50,9 +59,10 @@ def interpret_model(target_name):
         
         # Cleaning up feature name for file saving
         safe_feature_name = feature.replace(" ", "_").replace("/", "_")
-        plt.savefig(f'C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\results\\pdp_ice_{target_name}_{safe_feature_name}.png')
+        pdp_ice_output = os.path.join(project_root, 'results', f'pdp_ice_{target_name}_{safe_feature_name}.png')
+        plt.savefig(pdp_ice_output)
         plt.close()
-        print(f"  Saved PDP/ICE plot for {feature}")
+        print(f"  Saved PDP/ICE plot for {feature} to {pdp_ice_output}")
 
 if __name__ == "__main__":
     targets = ['Tl', 'Tx', 'Tg']

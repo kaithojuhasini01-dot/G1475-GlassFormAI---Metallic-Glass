@@ -1,10 +1,16 @@
 import pandas as pd
 from pymatgen.core import Composition
+import os
+
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # ---------------------------------------------------------
 # 1. LOAD YOUR  CLEANED CSV FILE
 # ---------------------------------------------------------
-input_file = 'C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\data\\cleaned\\metallic_glass_cleaned.csv'  
+input_file = os.path.join(project_root, "data", "cleaned", "metallic_glass_cleaned.csv")
+output_file = os.path.join(project_root, "data", "features", "dataset_with_elemental_composition.csv")
+
+os.makedirs(os.path.dirname(output_file), exist_ok=True)
 
 df = pd.read_csv(input_file)
 
@@ -53,7 +59,6 @@ elemental_df = elemental_df.fillna(0)
 final_df = pd.concat([df.drop(columns=['elemental_fractions']), elemental_df], axis=1)
 
 # Save to a new CSV file so you don't overwrite your original data
-output_file = 'C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\data\\features\\dataset_with_elemental_composition.csv'
 final_df.to_csv(output_file, index=False)
 
 print(f"\nSuccess! Processed dataset saved as '{output_file}'")

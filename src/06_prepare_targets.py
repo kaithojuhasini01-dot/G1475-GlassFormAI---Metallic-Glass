@@ -1,10 +1,18 @@
 import pandas as pd
+import os
+
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 def main():
     print("---PREPARING TARGET DATASETS ---\n")
     
     # 1. Loading the final feature dataset 
-    df = pd.read_csv('C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\data\\features\\final_feature_dataset.csv')
+    input_file = os.path.join(project_root, 'data', 'features', 'final_feature_dataset.csv')
+    features_dir = os.path.join(project_root, 'data', 'features')
+
+    os.makedirs(features_dir, exist_ok=True)
+
+    df = pd.read_csv(input_file)
 
     # ==========================================
     # A. CLASSIFICATION TASK (Dmax > 0)
@@ -17,9 +25,10 @@ def main():
     ).astype('Int64')
     
     # Saving the classification dataset
-    df.to_csv('C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\data\\features\\classification_data.csv', index=False)
+    class_output = os.path.join(features_dir, 'classification_data.csv')
+    df.to_csv(class_output, index=False)
     
-    print(f"  -> Classification dataset saved.")
+    print(f"  -> Classification dataset saved to '{class_output}'")
     print(f"  -> Target counts:\n{df['Dmax_label'].value_counts()}\n")
 
     # ==========================================
@@ -36,19 +45,22 @@ def main():
     # Important: Drop rows where Tl is missing (NaN)
     df_tl = df.dropna(subset=['Tl_[K]']).copy()
     df_tl = df_tl[feature_cols + ['Tl_[K]']]
-    df_tl.to_csv('C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\data\\features\\regression_Tl_data.csv', index=False)
+    tl_output = os.path.join(features_dir, 'regression_Tl_data.csv')
+    df_tl.to_csv(tl_output, index=False)
     print(f"  -> Tl Regression dataset saved. Shape: {df_tl.shape}")
 
     # --- Task 2: Predicting Tx (Crystallization Temperature) ---
     df_tx = df.dropna(subset=['Tx_[K]']).copy()
     df_tx = df_tx[feature_cols + ['Tx_[K]']]
-    df_tx.to_csv('C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\data\\features\\regression_Tx_data.csv', index=False)
+    tx_output = os.path.join(features_dir, 'regression_Tx_data.csv')
+    df_tx.to_csv(tx_output, index=False)
     print(f"  -> Tx Regression dataset saved. Shape: {df_tx.shape}")
 
     # --- Task 3: Predicting Tg (Glass Transition Temperature) ---
     df_tg = df.dropna(subset=['Tg_[K]']).copy()
     df_tg = df_tg[feature_cols + ['Tg_[K]']]
-    df_tg.to_csv('C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\data\\features\\regression_Tg_data.csv', index=False)
+    tg_output = os.path.join(features_dir, 'regression_Tg_data.csv')
+    df_tg.to_csv(tg_output, index=False)
     print(f"  -> Tg Regression dataset saved. Shape: {df_tg.shape}")
 
     print("\nAll target datasets are ready.")

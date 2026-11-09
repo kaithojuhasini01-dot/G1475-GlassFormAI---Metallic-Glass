@@ -1,6 +1,12 @@
+import os
+
 import pandas as pd
 
-df = pd.read_csv("metallic_glass_dataset.csv")
+
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+data_dir = os.path.join(project_root, "data")
+
+df = pd.read_csv(os.path.join(data_dir  , "raw", "metallic_glass_dataset.csv"))
 
 # Basic information
 print("----- FIRST 5 ROWS -----")

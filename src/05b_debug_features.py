@@ -1,8 +1,12 @@
 import pandas as pd
 from pymatgen.core import Composition
+import os
+
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Load the cleaned dataset
-df = pd.read_csv('C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\data\\cleaned\\metallic_glass_cleaned.csv')
+csv_path = os.path.join(project_root, 'data', 'cleaned', 'metallic_glass_cleaned.csv')
+df = pd.read_csv(csv_path)
 
 # Check the first 5 compositions
 print("First 5 compositions from the CSV:")

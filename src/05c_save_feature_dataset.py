@@ -1,11 +1,15 @@
 import pandas as pd
 import numpy as np
+import os   
+
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 def main():
     print("--- SAVING THE FEATURE DATASET ---\n")
     
     # 1. Loading the generated features
-    df = pd.read_csv(r'C:\Users\Kaithoju Hasini\OneDrive\Documents\metallic_glass_project\data\features\numerical_features.csv')
+    input_file = os.path.join(project_root, "data", "features", "numerical_features.csv")
+    df = pd.read_csv(input_file)
 
     # 2. Checking the number of rows and columns
     print(f"1. Dataset Shape: {df.shape[0]} rows, {df.shape[1]} columns")
@@ -45,11 +49,18 @@ def main():
     df_features = df[feature_cols].copy()
 
     # 8. Saving the generated features in CSV format
+    features_dir = os.path.join(project_root, "data", "features")
+    os.makedirs(features_dir, exist_ok=True)
+
+    final_path = os.path.join(features_dir, "final_feature_dataset.csv")
+    x_features_path = os.path.join(features_dir, "X_features.csv")
+    y_targets_path = os.path.join(features_dir, "y_targets.csv")
+
     print("\n6. Saving final datasets to data/features/...")
-    df.to_csv('C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\data\\features\\final_feature_dataset.csv', index=False)
-    df_features.to_csv('C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\data\\features\\X_features.csv', index=False)
-    df_targets.to_csv('C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\data\\features\\y_targets.csv', index=False)
-    
+    df.to_csv(final_path, index=False)
+    df_features.to_csv(x_features_path, index=False)
+    df_targets.to_csv(y_targets_path, index=False)
+
     print("   -> Saved: final_feature_dataset.csv (Everything combined)")
     print("   -> Saved: X_features.csv (Formula + Numerical Features only)")
     print("   -> Saved: y_targets.csv (Formula + Target Columns only)")

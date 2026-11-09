@@ -2,11 +2,17 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 import os
 
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 def prepare_dataset(target_name):
     print(f"\n--- PREPARING ML DATASET FOR: {target_name} ---")
     
     # 1. Loading the reduced dataset 
-    input_file = f'C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\data\\features\\selected_features_{target_name}.csv'
+    input_file = os.path.join(project_root, 'data', 'features', f'selected_features_{target_name}.csv')
+    ml_datasets_dir = os.path.join(project_root, 'data', 'ml_datasets')
+
+    os.makedirs(ml_datasets_dir, exist_ok=True)
+
     df = pd.read_csv(input_file)
     
     # 2. Removing invalid and missing target values (just to be safe)
@@ -32,15 +38,15 @@ def prepare_dataset(target_name):
     # We combine X and y back together just for saving to CSV
     train_df = pd.concat([X_train, y_train], axis=1)
     test_df = pd.concat([X_test, y_test], axis=1)
-    
-    # Creating a folder for the ML datasets if it doesn't exist
-    os.makedirs('C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\data\\ml_datasets', exist_ok=True)
-    
-    train_df.to_csv(f'C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\data\\ml_datasets\\train_{target_name}.csv', index=False)
-    test_df.to_csv(f'C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\data\\ml_datasets\\test_{target_name}.csv', index=False)
-    
-    print(f"  -> Saved: C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\data\\ml_datasets\\train_{target_name}.csv")
-    print(f"  -> Saved: C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\data\\ml_datasets\\test_{target_name}.csv")
+
+    train_output = os.path.join(ml_datasets_dir, f'train_{target_name}.csv')
+    test_output = os.path.join(ml_datasets_dir, f'test_{target_name}.csv')
+
+    train_df.to_csv(train_output, index=False)
+    test_df.to_csv(test_output, index=False)
+
+    print(f"  -> Saved: {train_output}")
+    print(f"  -> Saved: {test_output}")
 
 if __name__ == "__main__":
     targets = ['Tl', 'Tx', 'Tg']

@@ -9,7 +9,7 @@ def main():
     print("--- TRAINING XGBOOST CLASSIFIER ---")
     
     # 1. Loading the dataset
-    df = pd.read_csv('C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\data\\features\\classification_data.csv')
+    df = pd.read_csv('../data/features/classification_data.csv')
     
     # --- THE FIX: Renaming the column ---
     df.rename(columns={'Dmax_label': 'GFA_label'}, inplace=True)
@@ -55,9 +55,9 @@ def main():
         'Actual_Label': y_test_original,
         'Predicted_Label': y_pred_temp + 1
     })
-    os.makedirs('C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\results', exist_ok=True)
-    predictions_df.to_csv('C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\results\\predictions_xgboost.csv', index=False)
-    print("\nPredictions saved to 'C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\results\\predictions_xgboost.csv'")
+    os.makedirs('../results', exist_ok=True)
+    predictions_df.to_csv('../results/predictions_xgboost.csv', index=False)
+    print("\nPredictions saved to '../results/predictions_xgboost.csv'")
 
 
     # 7. Evaluating the Model
@@ -72,7 +72,7 @@ def main():
     print(f"F1-Score:  {f1 * 100:.2f}%")
     
     # 8. Saving Results
-    os.makedirs('C:/Users/Kaithoju Hasini/OneDrive/Documents/metallic_glass_project/results', exist_ok=True)
+    os.makedirs('../results', exist_ok=True)
     results_df = pd.DataFrame([{
         'Model': 'XGBoost (XGC)',
         'Accuracy': test_acc,
@@ -80,12 +80,12 @@ def main():
         'Recall': rec,
         'F1-Score': f1
     }])
-    results_df.to_csv('C:/Users/Kaithoju Hasini/OneDrive/Documents/metallic_glass_project/results/classification_xgboost_results.csv', index=False)
+    results_df.to_csv('../results/classification_xgboost_results.csv', index=False)
 
     #---Saving the model ---
-    os.makedirs('C:/Users/Kaithoju Hasini/OneDrive/Documents/metallic_glass_project/models', exist_ok=True)
-    joblib.dump(model, 'C:/Users/Kaithoju Hasini/OneDrive/Documents/metallic_glass_project/models/xgboost_classifier.pkl')
-    print("\nTrained Model saved to 'C:/Users/Kaithoju Hasini/OneDrive/Documents/metallic_glass_project/models/xgboost_classifier.pkl'")
+    os.makedirs('../models', exist_ok=True)
+    joblib.dump(model, '../models/xgboost_classifier.pkl')
+    print("\nTrained Model saved to '../models/xgboost_classifier.pkl'")
 
 if __name__ == "__main__":
     main()

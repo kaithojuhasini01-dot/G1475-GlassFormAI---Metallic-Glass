@@ -4,14 +4,17 @@ import os
 from sklearn.ensemble import ExtraTreesRegressor
 from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
 
+current_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.dirname(current_dir)
+
 def train_and_evaluate(target_name):
     print(f"\n{'='*40}")
     print(f"TRAINING ETR MODEL FOR: {target_name}")
     print(f"{'='*40}")
     
     # 1. Loading the train and test datasets 
-    train_df = pd.read_csv(f'C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\data\\ml_datasets\\train_{target_name}.csv')
-    test_df = pd.read_csv(f'C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\data\\ml_datasets\\test_{target_name}.csv')
+    train_df = pd.read_csv(os.path.join(project_root, "data","ml_datasets", f"train_{target_name}.csv"))
+    test_df = pd.read_csv(os.path.join(project_root, "data", "ml_datasets", f"test_{target_name}.csv"))
     
     target_col = f'{target_name}_[K]'
     
@@ -44,18 +47,20 @@ def train_and_evaluate(target_name):
     print(f"  MSE (Test):       {mse_test:.2f} K²")
 
     # 6. Save the predictions to CSV
-    os.makedirs('C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\results', exist_ok=True)
+    results_dir = os.path.join(project_root, 'results')
+    os.makedirs(results_dir, exist_ok=True)
     predictions_df = pd.DataFrame({
         'Actual_Temp': y_test,
         'Predicted_Temp': y_test_pred
     })
-    pred_filename = f'C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\results\\predictions_{target_name}.csv'
+    pred_filename = os.path.join(results_dir, f'predictions_{target_name}.csv')
     predictions_df.to_csv(pred_filename, index=False)
     print(f"  Predictions saved as: {pred_filename}")
 
     # 6. Saving the trained model
-    os.makedirs('C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\models', exist_ok=True)
-    model_filename = f'C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\models\\etr_{target_name}_model.pkl'
+    models_dir = os.path.join(project_root, 'models')
+    os.makedirs(models_dir, exist_ok=True)
+    model_filename = os.path.join(models_dir, f'etr_{target_name}_model.pkl')
     joblib.dump(etr_model, model_filename)
     print(f"  Model saved as: {model_filename}")
     
@@ -78,9 +83,9 @@ if __name__ == "__main__":
         all_results.append(result)
 
     # Saving summary results   
-    os.makedirs('C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\results', exist_ok=True)
+    os.makedirs('../results', exist_ok=True)
     results_df = pd.DataFrame(all_results)
-    results_df.to_csv('C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\results\\etr_regression_results.csv', index=False)
+    results_df.to_csv('../results/etr_regression_results.csv', index=False)
     
     
     print("\nAll ETR models trained, evaluated, and saved!")

@@ -5,16 +5,23 @@
 import pandas as pd
 import numpy as np
 import joblib
+import os
 from pymatgen.core import Composition
 from matminer.featurizers.composition import ElementProperty
 from pymoo.core.problem import ElementwiseProblem
 from pymoo.algorithms.moo.nsga2 import NSGA2
 from pymoo.optimize import minimize
 
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+models_dir = os.path.join(project_root, 'models')
+results_dir = os.path.join(project_root, 'results')
+os.makedirs(results_dir, exist_ok=True)
+
 # 1. Loading saved models 
-etr_tl = joblib.load('.../models/etr_Tl_model.pkl')
-etr_tx = joblib.load('.../models/etr_Tx_model.pkl')
-etr_tg = joblib.load('.../models/etr_Tg_model.pkl')
+etr_tl = joblib.load(os.path.join(models_dir, 'etr_Tl_model.pkl'))
+etr_tx = joblib.load(os.path.join(models_dir, 'etr_Tx_model.pkl'))
+etr_tg = joblib.load(os.path.join(models_dir, 'etr_Tg_model.pkl'))
 ep_feat = ElementProperty.from_preset(preset_name="magpie")
 
 # Defining feature lists globally so both the optimizer and saving loop can see them
@@ -81,8 +88,9 @@ for index, row in results_df.iterrows():
 
 final_results = pd.concat([results_df, pd.DataFrame(preds)], axis=1)
 # Saving results to csv
-final_results.to_csv('.../results/nsga2_optimized_compositions.csv', index=False)
+output_file = os.path.join(results_dir, 'nsga2_optimized_compositions.csv')
+final_results.to_csv(output_file, index=False)
 
-print("Results saved to 'nsga2_optimized_compositions.csv'")
+print(f"Results saved to '{output_file}'")
 print("\nTop 5 Optimized Alloys:")
 print(final_results.head())

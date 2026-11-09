@@ -1,7 +1,12 @@
 import pandas as pd
+import os
+
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+features_path = os.path.join(project_root, 'data', 'features', 'numerical_features.csv')
 
 # Load the features dataset
-df = pd.read_csv('C:\\Users\\Kaithoju Hasini\\OneDrive\\Documents\\metallic_glass_project\\data\\features\\numerical_features.csv')
+df = pd.read_csv(features_path)
 
 # 1. Print the shape (rows, columns)
 print("Dataset Shape:", df.shape)

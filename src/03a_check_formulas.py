@@ -1,8 +1,12 @@
 import pandas as pd
 import re
+import os
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.dirname(current_dir)
 
 # Read the cleaned dataset
-input_file = r"C:\Users\Kaithoju Hasini\OneDrive\Documents\metallic_glass_project\data\cleaned\metallic_glass_cleaned.csv"
+input_file = os.path.join(project_root, 'data', 'cleaned', 'metallic_glass_cleaned.csv')
 df = pd.read_csv(input_file)
 
 # Regular expression for checking chemical formula format
