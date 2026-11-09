@@ -20,7 +20,7 @@ Finally, we used our predicted temperatures to calculate the **Gamma (\(\gamma\)
 
 ## 📂 Repository Structure
 - `data/` : Contains raw, cleaned, features and ml_datasets (train/test splits).
-- `documentation/` : Comprehensive logs for data processing, model training, interpretation, GFA calculation, and NSGA-II optimization, and the interactive tool.
+- `documentation/` : Comprehensive logs for data processing, model training, interpretation, GFA calculation, NSGA-II optimization, and the interactive tool.
 - `models/` : Saved trained models(.pkl files) for classification and regression.
 - `notebooks/` : Jupyter Notebook containing the executed NSGA-II optimization code and outputs.
 - `results/` : Model evaluatioon metrics (CSV), predictions, and interpretation plots(PDP/ICE), GFA parameters, and the final NSGA-II optimized compositions.
