@@ -6,7 +6,7 @@ This project reproduces and extends the machine learning pipeline from the paper
 
 Beyond just prediction, we performed comprehensive **Model Interpretation** using Feature Importance, Partial Dependence Plots (PDP), and Individual Conditional Expectation (ICE) plots to explain *how* the models make their decisions. Our final ETR regression models achieved an exceptional **R² score > 0.96**, outperforming the base paper's reported results. 
 
-Finally, we used our predicted temperatures to calculate the **Gamma (\(\gamma\)) GFA parameter**, and implemented the advanced **NSGA-II Genetic Algorithm** (executed via Google Colab) to optimize the Zr-Cu-Ni-Al composition, successfully identifying novel alloys with high predicted glass-forming ability.
+Finally, we used our predicted temperatures to calculate the **Gamma (\(\gamma\)) GFA parameter**, and implemented the advanced **NSGA-II Genetic Algorithm** (executed via Google Colab) to optimize the Zr-Cu-Ni-Al composition, and deployed a **fully functional Interactive Web Tool (GUI)** using Streamlit. This tool allows users to input any chemical formula and instantly receive real-time predictions for thermal properties, GFA parameters, and view optimized alloy compositions.
 
 ## 👥 Team Members
 - Hasini Kaithoju (26P85A0502)
@@ -20,11 +20,11 @@ Finally, we used our predicted temperatures to calculate the **Gamma (\(\gamma\)
 
 ## 📂 Repository Structure
 - `data/` : Contains raw, cleaned, features and ml_datasets (train/test splits).
-- `documentation/` : Comprehensive logs for data processing, model training, interpretation, GFA calculation, and NSGA-II optimization.
+- `documentation/` : Comprehensive logs for data processing, model training, interpretation, GFA calculation, and NSGA-II optimization, and the interactive tool.
 - `models/` : Saved trained models(.pkl files) for classification and regression.
 - `notebooks/` : Jupyter Notebook containing the executed NSGA-II optimization code and outputs.
 - `results/` : Model evaluatioon metrics (CSV), predictions, and interpretation plots(PDP/ICE), GFA parameters, and the final NSGA-II optimized compositions.
-- `src/` : Python scripts for data processing, feature generation, selection, training, interpretation, GFA calculation and optimization.
+- `src/` : Python scripts for data processing, feature generation, selection, training, interpretation, GFA calculation, optimization and the Streamlit interactive GUI(`app.py`).
 
 ## 🚀 Progress Tracker
 - [x] Milestone 1: Data processing and elemental fraction generation.
@@ -41,6 +41,7 @@ Finally, we used our predicted temperatures to calculate the **Gamma (\(\gamma\)
 - [x] Day 13: Completed Model Interpretation(Feature Importance, PDP, and ICE plots) for all targets.
 - [x] Day 14: Calculated GFA parameters (Gamma) using predicted temperatures and saved results.
 - [x] Day 15: Implemented and executed NSGA-II optimization (via Colab) to generate novel alloy compositions.
+- [x] Day 16: Built and deployed the interactive Streamlit GUI for real-time alloy predictions.
 
 ## 🛠️ Technologies Used
 
@@ -48,6 +49,7 @@ Finally, we used our predicted temperatures to calculate the **Gamma (\(\gamma\)
 - Python 3
 - Google Colab / Jupyter Notebook (for executing the NSGA-II optimization)
 - VS Code (for core development)
+- Streamlit (for building the interactive web GUI)
 
 **Data Manipulation & Processing**
 - Pandas, NumPy
