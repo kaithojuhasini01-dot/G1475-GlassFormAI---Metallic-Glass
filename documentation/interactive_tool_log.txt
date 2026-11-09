@@ -1,0 +1,27 @@
+# Interactive Tool (GUI) Development Log
+
+**Date:** 09-11-2026
+
+## 1. Objective
+To fulfill the final proposed enhancement of our project, we developed a fully functional interactive user tool (Graphical User Interface). This tool allows end-users (Materials Scientists, Metallurgists) to input any chemical formula and instantly receive predictions on its Glass-Forming Ability (GFA) and thermal properties.
+
+## 2. Technologies Used
+- **Streamlit:** Used to build the web-based interactive interface.
+- **Joblib:** Used to load the pre-trained XGBoost and ETR machine learning models.
+- **Pymatgen & Matminer:** Used to extract elemental features from the user's input formula in real-time.
+
+## 3. Features Implemented
+1. **User Input:** A text box where users can enter any alloy composition (e.g., `Zr60Cu20Ni10Al10`).
+2. **Real-Time Feature Generation:** The app automatically converts the formula into the 140 Magpie descriptors required by our models.
+3. **Regression Predictions:** The app uses our highly accurate ETR models to predict Liquidus Temperature (Tl), Crystallization Temperature (Tx), and Glass Transition Temperature (Tg).
+4. **GFA Parameter Calculation:** The app automatically calculates the Gamma (\(\gamma\)) parameter.
+5. **NSGA-II Display:** The app displays the top 5 novel alloy compositions discovered by our genetic algorithm optimization.
+6. **Physics-Informed Constraints (Crucial Addition):** We added a safety check to the app. Physics dictates that \(T_l > T_x > T_g\). If the user inputs an extreme, out-of-distribution formula (e.g., pure Copper or non-metals) and the model predicts an unphysical result (e.g., \(T_g > T_x\)), the app automatically triggers a yellow warning message to alert the user.
+
+## 4. Note on Classification
+As documented earlier, our public dataset lacked negative examples (alloys with Dmax = 0). To ensure the regression models could run smoothly in the demo, we bypassed the classification step in the GUI (assuming it forms glass) and focused on the highly accurate thermal predictions.
+
+## 5. How to Run the Tool
+The tool is executed via the terminal using Streamlit:
+```bash
+python -m streamlit run src/app.py
